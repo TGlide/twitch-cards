@@ -1,21 +1,28 @@
 <script lang="ts">
 	import HoverCard from '$components/HoverCard.svelte';
 	let hcKey = 1;
-	let shouldDrawHitboxes = false;
+	let shouldDrawHitboxes = true;
+	let shouldDetectCollisions = true;
 	let text = 'Bringing method to our (beloved) madness';
 </script>
 
 <div class="wrapper">
-	{#key `${hcKey}-${shouldDrawHitboxes}-${text}`}
-		<HoverCard {shouldDrawHitboxes}>{text}</HoverCard>
+	{#key `${hcKey}-${shouldDrawHitboxes}-${shouldDetectCollisions}-${text}`}
+		<HoverCard {shouldDrawHitboxes} {shouldDetectCollisions}>{text}</HoverCard>
 	{/key}
 
 	<div class="controls">
 		<textarea bind:value={text} />
 		<button on:click={() => (hcKey = hcKey + 1)}> Refresh </button>
-		<button on:click={() => (shouldDrawHitboxes = !shouldDrawHitboxes)}>
-			Draw hitboxes {shouldDrawHitboxes}
-		</button>
+		<!-- TODO: Make better hitboxes, to allow responsive collision detection -->
+		<label>
+			<input type="checkbox" bind:checked={shouldDrawHitboxes} />
+			Draw hitboxes? (WIP)
+		</label>
+		<label>
+			<input type="checkbox" bind:checked={shouldDetectCollisions} />
+			Detect collisions?
+		</label>
 	</div>
 </div>
 
@@ -24,6 +31,7 @@
 		padding: 0;
 		margin: 0;
 		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		color: white;
 	}
 
 	:global(*) {
@@ -33,7 +41,7 @@
 	.wrapper {
 		background: #000;
 		min-height: 100vh;
-		padding: 64px;
+		padding: clamp(8px, 5vw, 64px);
 	}
 
 	.controls {
@@ -46,6 +54,6 @@
 	}
 
 	.controls textarea {
-		min-width: 300px;
+		min-width: clamp(200px, 25vw, 400px);
 	}
 </style>

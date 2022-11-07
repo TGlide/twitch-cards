@@ -6,6 +6,7 @@
 	let el: HTMLDivElement | undefined;
 	let wordHitboxes: Word[] = [];
 	export let shouldDrawHitboxes = false;
+	export let shouldDetectCollisions = false;
 
 	$: {
 		(function createSpanElements() {
@@ -43,12 +44,14 @@
 				// Keep trying to find a random position that doesn't collide with other words
 				while (hasCollision && tries < 100) {
 					tries++;
-					deltaX = randRange(-100, 150);
+					deltaX = randRange(-75, 100);
 					deltaY = randRange(-400, 0);
 					deltaDeg = randRange(-120, 120);
 
 					wr = new Word(word, x + deltaX, y + deltaY, deltaDeg);
-					hasCollision = wordHitboxes.some((word) => detectRectangleCollision(wr, word));
+					hasCollision = shouldDetectCollisions
+						? wordHitboxes.some((word) => detectRectangleCollision(wr, word))
+						: false;
 				}
 
 				wordHitboxes.push(wr);
@@ -107,7 +110,8 @@
 		position: relative;
 
 		width: 600px;
-		min-height: 850px;
+		max-width: 100%;
+		min-height: clamp(500px, 50vw, 850px);
 
 		display: flex;
 	}
@@ -123,7 +127,7 @@
 		width: 100%;
 		height: 100%;
 		transform: translate(-50%, -50%);
-		transition: 500ms ease-out;
+		transition: 300ms ease-out;
 	}
 
 	.card:hover > .bg {
@@ -137,7 +141,7 @@
 
 		color: #9146ff;
 
-		font-size: 3.25rem;
+		font-size: clamp(24px, 5vw, 56px);
 		font-weight: 600;
 
 		padding: 45px;
@@ -174,6 +178,7 @@
 		width: 100%;
 		height: 100%;
 		transform: translate(-50%, -50%);
+		overflow: hidden;
 	}
 
 	.fg :global(.word-hitbox) {
