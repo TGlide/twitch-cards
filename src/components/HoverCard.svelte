@@ -45,7 +45,7 @@
 				while (hasCollision && tries < 100) {
 					tries++;
 					deltaX = randRange(-75, 100);
-					deltaY = randRange(-400, 0);
+					deltaY = randRange(-500, 0);
 					deltaDeg = randRange(-120, 120);
 
 					wr = new Word(word, x + deltaX, y + deltaY, deltaDeg);

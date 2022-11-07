@@ -6,6 +6,10 @@
 	let text = 'Bringing method to our (beloved) madness';
 </script>
 
+<svelte:head>
+	<title>Twitch Cards</title>
+</svelte:head>
+
 <div class="wrapper">
 	{#key `${hcKey}-${shouldDrawHitboxes}-${shouldDetectCollisions}-${text}`}
 		<HoverCard {shouldDrawHitboxes} {shouldDetectCollisions}>{text}</HoverCard>
