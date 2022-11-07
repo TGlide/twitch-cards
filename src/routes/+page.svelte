@@ -1,7 +1,7 @@
 <script lang="ts">
 	import HoverCard from '$components/HoverCard.svelte';
 	let hcKey = 1;
-	let shouldDrawHitboxes = true;
+	let shouldDrawHitboxes = false;
 	let shouldDetectCollisions = true;
 	let text = 'Bringing method to our (beloved) madness';
 </script>
@@ -13,7 +13,7 @@
 
 	<div class="controls">
 		<textarea bind:value={text} />
-		<button on:click={() => (hcKey = hcKey + 1)}> Refresh </button>
+		<button on:click={() => (hcKey = hcKey + 1)}> Randomize position </button>
 		<!-- TODO: Make better hitboxes, to allow responsive collision detection -->
 		<label>
 			<input type="checkbox" bind:checked={shouldDrawHitboxes} />
